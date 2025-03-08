@@ -1,0 +1,80 @@
+services:
+
+  init-ha:
+    container_name: init-ha
+    image: debian:stable-slim
+    restart: "no"
+    entrypoint: ["/bin/bash", "-c"]
+    command: ["ls -al /setup && ls -al /config && chmod +x /setup/get-hacs.sh && cp -f /setup/configuration.yaml /config && /setup/get-hacs.sh"]
+    env_file: .env
+    volumes:
+      - /mnt/data/appdata/ha/config:/config:rw
+      - /mnt/data/appdata/ha/media:/media:rw
+      - /stacks/automation/config:/setup
+    networks:
+      - backend
+  
+  home-assistant:
+    container_name: home-assistant
+    image: homeassistant/home-assistant:2025.2
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - /mnt/data/appdata/ha/config:/config:rw
+      - /mnt/data/appdata/ha/media:/media:rw
+    depends_on:
+      - postgres-ha
+      - init-ha
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8123"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+    ports:
+      - 8123:8123
+      - 1400:1400
+    environment:
+      TZ: Europe/Amsterdam
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ha.entrypoints=http"
+      - "traefik.http.routers.ha.rule=Host(`${HOME_ASSISTANT_DOMAIN}`)"
+      - "traefik.http.middlewares.ha-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.ha.middlewares=ha-https-redirect"
+      - "traefik.http.routers.ha-secure.entrypoints=https"
+      - "traefik.http.routers.ha-secure.rule=Host(`${HOME_ASSISTANT_DOMAIN}`)"
+      - "traefik.http.routers.ha-secure.middlewares=authentik@file"
+      - "traefik.http.routers.ha-secure.tls=true"
+      - "traefik.http.routers.ha.service=ha"
+      - "traefik.http.services.ha.loadbalancer.server.port=8123"
+      - "traefik.docker.network=frontend"
+
+  postgres-ha:
+    container_name: postgres-ha
+    image: postgres:16.6
+    restart: unless-stopped
+    networks:
+      - backend
+    ports:
+      - 5432:5432
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${HOME_ASSISTANT_PG_DB}
+      POSTGRES_PASSWORD: ${HOME_ASSISTANT_PG_PASSWORD}
+      POSTGRES_USER: ${HOME_ASSISTANT_PG_USER}
+    volumes:
+      - /mnt/data/appdata/ha/db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${HOME_ASSISTANT_PG_USER}", "-d", "${HOME_ASSISTANT_PG_DB}"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+
+networks:
+  backend:
+    driver: bridge
+  frontend:
+    external: true

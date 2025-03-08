@@ -1,0 +1,58 @@
+homeassistant:
+  name: Thuis
+  latitude: 51.89614
+  longitude: 4.16778
+  elevation: 0
+  radius: 30
+  time_zone: Europe/Amsterdam
+  unit_system: metric
+  currency: EUR
+  country: NL
+  external_url: "https://ha.moerman.online"
+  debug: false
+  # customize: !include customize.yaml
+
+default_config:
+
+frontend:
+  themes: !include_dir_named themes
+
+history:
+
+logbook:
+
+http:
+  trusted_proxies: 
+    - 172.16.0.0/12
+    - 10.0.0.0/24
+  ip_ban_enabled: false
+  login_attempts_threshold: 10
+  use_x_forwarded_for: true
+
+auth_header:
+  username_header: X-authentik-username
+  allow_bypass_login: true
+  debug: false
+
+logger:
+  default: info
+#  logs:
+#    custom_components.auth_header: debug
+
+recorder:
+  auto_purge: false
+  purge_keep_days: 3660
+  db_url: postgresql://postgres:Ahzi1weirunae7deekash2aiquohgu@postgres-ha/homeassistant
+  db_retry_wait: 5
+
+mqtt:
+  sensor:
+    - name: "Solarpower"
+      state_topic: "/energy/inverter"
+      unit_of_measurement: "W"
+      value_template: "{% raw %}{{ value_json.power | round(0) }}{% endraw %}"
+      json_attributes_topic: "/energy/inverter"
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml

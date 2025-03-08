@@ -10,7 +10,7 @@ services:
     volumes:
       - /mnt/data/appdata/ha/config:/config:rw
       - /mnt/data/appdata/ha/media:/media:rw
-      - /stacks/automation/config:/setup
+      - ./config:/setup
     networks:
       - backend
   

@@ -5,7 +5,7 @@ services:
     image: debian:stable-slim
     restart: "no"
     entrypoint: ["/bin/bash", "-c"]
-    command: ["ls -al /setup && ls -al /config && chmod +x /setup/get-hacs.sh && cp -f /setup/configuration.yaml /config && /setup/get-hacs.sh"]
+    command: ["ls -al /setup && ls -al /setup/config && chmod +x /setup/get-hacs.sh && cp -f /setup/configuration.yaml /config && /setup/get-hacs.sh"]
     env_file: .env
     volumes:
       - /mnt/data/appdata/ha/config:/config:rw

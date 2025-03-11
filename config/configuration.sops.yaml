@@ -39,7 +39,7 @@ logger:
 recorder:
     auto_purge: false
     purge_keep_days: 3660
-    db_url: ENC[AES256_GCM,data:Cqqp2MKfx/JlZdAbifs040gk0FPAqzgQ6R0JdJ8dRelbZ2vZEBPHwbTXZ/zwdLSNrFw8UsxZ/LMt4zfmJOlKRZUTcwcwOe79kkJR,iv:FM30+89yZEHsOjGbulFcfOqk1OzBUUslk6TvD3uib4E=,tag:LMYBFoHBS8VGO35PeBCL7g==,type:str]
+    db_url: ENC[AES256_GCM,data:o4jYzFVvLAg8MEC1vDMfo586D7ctaTaObeKtBh4NKtCnb6YBOcGvv8I7PeNxFMwAa8F+YjuuvzlWc//jOSZqsJ4T9qgm02uSR9J/fT8g,iv:kKfK7tRYMnSyR6tAY+zgUrhufYVYcjfXmMMAX9zwUeg=,tag:2H1e+XemCCX9h55VFYu+Xg==,type:str]
     db_retry_wait: 5
 mqtt:
     sensor:
@@ -71,8 +71,8 @@ sops:
             UUdiVzNkN1IrN1hZb3Y3cGQ3V3lyNXMK2CZ5lFGNTZUbsjMYRi8Zx2FE3/ndgvYY
             lPTT25Bn8R1gJdvCMvlE8LZ3NnCj8FDgBgAzood6MSrWrJIR4QRi0A==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-03-11T18:50:03Z"
-    mac: ENC[AES256_GCM,data:phoCMQExcXRWELW68n0LYE7CEi9djYsB7zmJb9Ol8BmQ67h9Gn3CVG0cA+a7TmeZ0sBy4/1YKlCQ+zX5tNLjOsRsK8/vNIw2OtTPfOUJJPzBiMsToSewWCl6iQdiVR862ymXFrzJUnoBUvBCa07jGhf4Vz5fQUI7xxyQt8IDJQ0=,iv:pB8qU54hIMZvaZdTDVLBrwarrRM90S+rn95wIqNRoh4=,tag:D7JNhdnK9WxW+skFwMhFDw==,type:str]
+    lastmodified: "2025-03-11T19:53:22Z"
+    mac: ENC[AES256_GCM,data:1ioxtXUFwMaj0PFGIpw383gwLgpcAfN7/KQ7vaecixcWMpIp4CSyEL8y1/Xk1repAL8S4jB7zUuVDLDBHyVhRj63y2nZN9sIT+wUHWzIcZZskdxdUh6tBmbTHAQDOlMmovmNk+KQbBoGdsnKZxkFhJw7LW3tlpsq6hdAp/zcrgs=,iv:csQqJKRhLoTi6/4dgfM35OQBpRvcee7TImg7gJXR/us=,tag:kt8Ce0ThZNP2w9P1IKtYGA==,type:str]
     pgp: []
     encrypted_regex: ^(latitude|longitude|external_url|db_url)$
     version: 3.9.2

@@ -1,0 +1,78 @@
+homeassistant:
+    # Name of the location where Home Assistant is running
+    name: Thuis
+    # Location required to calculate the time the sun rises and sets
+    latitude: ENC[AES256_GCM,data:qVqqYzihcqg=,iv:rte9Y4qzldkRsX6p4ei2poMFjpvuYLibF8DDQw7eTa4=,tag:1kz69esqsiOQ4L98DIs06A==,type:float]
+    longitude: ENC[AES256_GCM,data:Q5eMz+k7Kw==,iv:ihAwf1oSw5JV3xWNFgy8dAt/bdaCoCyvpoxaTJGSgNU=,tag:z/h/DLnv41sUHvNvGPdcWQ==,type:float]
+    elevation: 0
+    radius: 30
+    unit_system: metric
+    time_zone: Europe/Amsterdam
+    currency: EUR
+    country: NL
+    external_url: ENC[AES256_GCM,data:X9sfXaHhVmtToEKRFoDaKmutVmL9sG+y+A==,iv:stwMKt4CosvZ1D8/hk5JZTsgDK13woS42G56OtMqaAM=,tag:lyI9sJcMPTQvkUhkLY2+XA==,type:str]
+    debug: false
+    # customize: !include customize.yaml
+# Loads default set of integrations. Do not remove.
+default_config: null
+# Load frontend themes from the themes folder
+frontend:
+    themes: themes
+history: null
+logbook: null
+# Traefik reverse proxy setup
+http:
+    ip_ban_enabled: false
+    login_attempts_threshold: 10
+    use_x_forwarded_for: true
+    trusted_proxies:
+        - 172.18.0.0/16
+        - 10.0.0.0/24
+auth_header:
+    username_header: X-authentik-username
+    allow_bypass_login: true
+    debug: false
+logger:
+    default: info
+#  logs:
+#    custom_components.auth_header: debug
+recorder:
+    auto_purge: false
+    purge_keep_days: 3660
+    db_url: ENC[AES256_GCM,data:Cqqp2MKfx/JlZdAbifs040gk0FPAqzgQ6R0JdJ8dRelbZ2vZEBPHwbTXZ/zwdLSNrFw8UsxZ/LMt4zfmJOlKRZUTcwcwOe79kkJR,iv:FM30+89yZEHsOjGbulFcfOqk1OzBUUslk6TvD3uib4E=,tag:LMYBFoHBS8VGO35PeBCL7g==,type:str]
+    db_retry_wait: 5
+mqtt:
+    sensor:
+        - name: Solarpower
+          state_topic: /energy/inverter
+          unit_of_measurement: W
+          value_template: '{% raw %}{{ value_json.power | round(0) }}{% endraw %}'
+          json_attributes_topic: /energy/inverter
+#auth_oidc:
+#  client_id: "8N8sLcaZa7Hd7OhKgopmra4Y1IBRpJGGtBsLuHto"
+#  client_secret: "Rlejbc2VFEXF5oUFVhy3TTHsUDYZIDfztkAnTPpjgD5qk2zuTebERXH4FHhdCxqF0B3w7ZS4rrKlyHRHBvAwdrewC8gDU53GxSUvBQiNMv1EpdfF0EMo5PvxZgQSKLzO"
+#  discovery_url: "https://auth.moerman.online/application/o/home-assistant/.well-known/openid-configuration"
+#  display_name: "Authentik (SSO)"
+automation: automations.yaml
+script: scripts.yaml
+scene: scenes.yaml
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age109fzapgarv59gpyu5tgmwgn7j3hwmfs0dhrz3lrqvjy046jxafnse30kvj
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBva09SWEwxQlJheHVmOTRl
+            M2dsOERuV05DbEVkU0hQK2Z4eUFCd2FDSlZVClpDU2hHK012MWFSV3Q5RmJEdW5w
+            bDExc2ZEMjZUdTdaOWV0Vk1jb3pRd1UKLS0tIG5IREUwRW9YZ3lxSFd1ZUpvNCtE
+            UUdiVzNkN1IrN1hZb3Y3cGQ3V3lyNXMK2CZ5lFGNTZUbsjMYRi8Zx2FE3/ndgvYY
+            lPTT25Bn8R1gJdvCMvlE8LZ3NnCj8FDgBgAzood6MSrWrJIR4QRi0A==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-03-11T18:50:03Z"
+    mac: ENC[AES256_GCM,data:phoCMQExcXRWELW68n0LYE7CEi9djYsB7zmJb9Ol8BmQ67h9Gn3CVG0cA+a7TmeZ0sBy4/1YKlCQ+zX5tNLjOsRsK8/vNIw2OtTPfOUJJPzBiMsToSewWCl6iQdiVR862ymXFrzJUnoBUvBCa07jGhf4Vz5fQUI7xxyQt8IDJQ0=,iv:pB8qU54hIMZvaZdTDVLBrwarrRM90S+rn95wIqNRoh4=,tag:D7JNhdnK9WxW+skFwMhFDw==,type:str]
+    pgp: []
+    encrypted_regex: ^(latitude|longitude|external_url|db_url)$
+    version: 3.9.2

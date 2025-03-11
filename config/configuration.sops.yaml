@@ -16,8 +16,8 @@ homeassistant:
 # Loads default set of integrations. Do not remove.
 default_config: null
 # Load frontend themes from the themes folder
-frontend:
-    themes: themes
+frontend: null
+themes: themes
 history: null
 logbook: null
 # Traefik reverse proxy setup
@@ -71,8 +71,8 @@ sops:
             UUdiVzNkN1IrN1hZb3Y3cGQ3V3lyNXMK2CZ5lFGNTZUbsjMYRi8Zx2FE3/ndgvYY
             lPTT25Bn8R1gJdvCMvlE8LZ3NnCj8FDgBgAzood6MSrWrJIR4QRi0A==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-03-11T19:53:22Z"
-    mac: ENC[AES256_GCM,data:1ioxtXUFwMaj0PFGIpw383gwLgpcAfN7/KQ7vaecixcWMpIp4CSyEL8y1/Xk1repAL8S4jB7zUuVDLDBHyVhRj63y2nZN9sIT+wUHWzIcZZskdxdUh6tBmbTHAQDOlMmovmNk+KQbBoGdsnKZxkFhJw7LW3tlpsq6hdAp/zcrgs=,iv:csQqJKRhLoTi6/4dgfM35OQBpRvcee7TImg7gJXR/us=,tag:kt8Ce0ThZNP2w9P1IKtYGA==,type:str]
+    lastmodified: "2025-03-11T20:07:42Z"
+    mac: ENC[AES256_GCM,data:mB/dL8T+krht1oAw6Yd5SD59DHDinKgxe8RQDQga2P7C3IXRvMP4kweSx5i4hSnbmsOGnGw7xH0Biij5yh5s26YWPoKv6I6kw9E2p6WN0UbqZGSX47en3LMT/xYVGYs3VVsfljGn+YGe2SDuv7jaZh2eQy08hDrn0mGRxCmdU+A=,iv:eVYEvNkDTtLdncaV1ddpJK3IYGo+dd5qYD0bJKQFPr4=,tag:UU0DGJUOkwZ6Ik7dvj5QXQ==,type:str]
     pgp: []
     encrypted_regex: ^(latitude|longitude|external_url|db_url)$
     version: 3.9.2

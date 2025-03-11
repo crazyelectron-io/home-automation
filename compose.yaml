@@ -1,19 +1,22 @@
+---
 services:
 
+  # --- Initializer for Home Assistant
   init-ha:
     container_name: init-ha
     image: debian:stable-slim
     restart: "no"
     entrypoint: ["/bin/bash", "-c"]
-    command: ["ls -al /setup && ls -al /setup/stacks && chmod +x /setup/get-hacs.sh && cp -f /setup/configuration.yaml /config && /setup/get-hacs.sh"]
+    command: ["ls -al /setup && ls -al /config && chmod +x /setup/get-hacs.sh && cp -f /setup/configuration.yaml /config && /setup/get-hacs.sh"]
     env_file: .env
     volumes:
       - /mnt/data/appdata/ha/config:/config:rw
       - /mnt/data/appdata/ha/media:/media:rw
-      - ./:/setup
+      - ./config/:/setup
     networks:
       - backend
   
+  # --- Home Assistant
   home-assistant:
     container_name: home-assistant
     image: homeassistant/home-assistant:2025.2
@@ -52,6 +55,7 @@ services:
       - "traefik.http.services.ha.loadbalancer.server.port=8123"
       - "traefik.docker.network=frontend"
 
+  # --- PostgreSQL for Home Assistant
   postgres-ha:
     container_name: postgres-ha
     image: postgres:16.6

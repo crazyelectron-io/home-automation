@@ -1,33 +1,38 @@
 homeassistant:
+  # Name of the location where Home Assistant is running
   name: Thuis
+  # Location required to calculate the time the sun rises and sets
   latitude: 51.89614
   longitude: 4.16778
   elevation: 0
   radius: 30
-  time_zone: Europe/Amsterdam
   unit_system: metric
+  time_zone: Europe/Amsterdam
   currency: EUR
   country: NL
   external_url: "https://ha.moerman.online"
   debug: false
   # customize: !include customize.yaml
 
+# Loads default set of integrations. Do not remove.
 default_config:
 
+# Load frontend themes from the themes folder
 frontend:
-  themes: !include_dir_named themes
+  themes: !include_dir_merge_named themes
 
 history:
 
 logbook:
 
+# Traefik reverse proxy setup
 http:
-  trusted_proxies: 
-    - 172.16.0.0/12
-    - 10.0.0.0/24
   ip_ban_enabled: false
   login_attempts_threshold: 10
   use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.18.0.0/16
+    - 10.0.0.0/24
 
 auth_header:
   username_header: X-authentik-username
@@ -42,7 +47,7 @@ logger:
 recorder:
   auto_purge: false
   purge_keep_days: 3660
-  db_url: postgresql://postgres:Ahzi1weirunae7deekash2aiquohgu@postgres-ha/homeassistant
+  db_url: postgresql://postgres:Ahzi1weirunae7deekash2aiquohgu@postgres/homeassistant
   db_retry_wait: 5
 
 mqtt:
@@ -52,6 +57,12 @@ mqtt:
       unit_of_measurement: "W"
       value_template: "{% raw %}{{ value_json.power | round(0) }}{% endraw %}"
       json_attributes_topic: "/energy/inverter"
+
+#auth_oidc:
+#  client_id: "8N8sLcaZa7Hd7OhKgopmra4Y1IBRpJGGtBsLuHto"
+#  client_secret: "Rlejbc2VFEXF5oUFVhy3TTHsUDYZIDfztkAnTPpjgD5qk2zuTebERXH4FHhdCxqF0B3w7ZS4rrKlyHRHBvAwdrewC8gDU53GxSUvBQiNMv1EpdfF0EMo5PvxZgQSKLzO"
+#  discovery_url: "https://auth.moerman.online/application/o/home-assistant/.well-known/openid-configuration"
+#  display_name: "Authentik (SSO)"
 
 automation: !include automations.yaml
 script: !include scripts.yaml
